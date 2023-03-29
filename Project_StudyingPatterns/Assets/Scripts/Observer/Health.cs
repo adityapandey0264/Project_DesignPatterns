@@ -16,7 +16,17 @@ public class Health : MonoBehaviour
         StartCoroutine(healthDrain());
     }
 
-    public void resetHealth()
+    //Why do we do this onEnable not in Start because the object may be disabled when the game starts.
+    private void OnEnable()
+    {
+        GetComponent<Level>().onlevelUpAction += resetHealth; //listener is like a observer
+    }
+    private void OnDisable()
+    {
+        GetComponent<Level>().onlevelUpAction -= resetHealth; //listener is like a observer  
+    }
+
+    private void resetHealth()
     {
         currentHealth = fullHealth;
     }
